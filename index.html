@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Abdullah Al Aziz | Digital Identity</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --c-bg: #000000;
+            --c-text: #F2F2F2;
+            --c-accent: #B6B09F;
+            --c-card: rgba(255, 255, 255, 0.03);
+            --c-border: rgba(182, 176, 159, 0.15);
+        }
+
+        /* Essential Reset for Single Screen Experience */
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            position: fixed;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .viewport-wrapper {
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        /* Professional Film Texture */
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: 100;
+        }
+
+        /* Dynamic Background Spotlight */
+        .spotlight {
+            position: absolute;
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle, rgba(182, 176, 159, 0.08) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Corner Logo Styling */
+        .corner-logo {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 45px;
+            height: auto;
+            z-index: 50;
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+        }
+
+        /* Professional Card System */
+        .glass-container {
+            background: var(--c-card);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--c-border);
+            border-radius: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            padding: 2.5rem 1.25rem 1.25rem;
+        }
+
+        /* Profile Visuals */
+        .avatar-frame {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1rem;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1.75rem;
+            filter: grayscale(0.2);
+            border: 1px solid var(--c-border);
+        }
+
+        .status-pill {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: var(--c-accent);
+            color: var(--c-bg);
+            padding: 4px 10px;
+            border-radius: 1rem;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Interactive Elements */
+        .action-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 1.25rem;
+            border-radius: 1.25rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+        }
+
+        .action-link:hover, .action-link:active {
+            background: rgba(182, 176, 159, 0.2);
+            border-color: var(--c-accent);
+            transform: scale(0.98);
+        }
+
+        .action-link i {
+            color: var(--c-accent);
+            font-size: 1.1rem;
+        }
+
+        /* Primary CTA */
+        .cta-button {
+            background: var(--c-accent);
+            color: var(--c-bg);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 10px;
+            padding: 1.25rem;
+            border-radius: 1.25rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .cta-button:active {
+            transform: scale(0.97);
+            background: var(--c-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            opacity: 0;
+        }
+
+        /* Custom Scrollbar */
+        .scroll-area::-webkit-scrollbar {
+            width: 3px;
+        }
+        .scroll-area::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: var(--c-accent);
+            opacity: 0.5;
+            border-radius: 10px;
+        }
+        .scroll-area {
+            scrollbar-width: thin;
+            scrollbar-color: var(--c-accent) transparent;
+        }
+    </style>
+</head>
+<body class="viewport-wrapper">
+
+    <div class="grain-overlay"></div>
+    <div class="spotlight"></div>
+
+    <!-- Corner Logo Asset -->
+    <img src="Logo.png" alt="Logo" class="corner-logo animate" style="animation-delay: 0.05s;" onerror="this.style.display='none';">
+
+    <main class="glass-container animate" style="animation-delay: 0.1s;">
+        
+        <!-- Identity Branding -->
+        <header class="text-center pt-2">
+            <div class="avatar-frame">
+                <img src="Muhammad.webp" alt="Abdullah Al Aziz" class="avatar-img" onerror="this.src='https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200';">
+                <div class="status-pill">Active</div>
+            </div>
+
+            <h1 class="font-serif text-3xl tracking-tight mb-1">Abdullah <span class="text-[#B6B09F] italic">Al Aziz</span></h1>
+            <p class="text-[10px] uppercase tracking-[0.4em] text-[#B6B09F]/80 mb-6">_______</p>
+        </header>
+
+        <!-- Connectivity Stack (Scrollable List of Contact Buttons) -->
+        <div class="flex-grow overflow-y-auto px-1 scroll-area pb-4">
+            
+            <a href="https://facebook.com/61557137360917" class="action-link animate" style="animation-delay: 0.3s;">
+                <div class="flex items-center gap-4">
+                    <i class="fa-brands fa-facebook-f w-5 text-center"></i>
+                    <span class="text-sm font-medium tracking-wide">Facebook</span>
+                </div>
+                <span class="text-[10px] opacity-30 uppercase tracking-widest italic">Page</span>
+            </a>
+
+            <a href="https://youtube.com/@muhammadabdullahalazizmuhammad" class="action-link animate" style="animation-delay: 0.4s;">
+                <div class="flex items-center gap-4">
+                    <i class="fa-brands fa-youtube w-5 text-center"></i>
+                    <span class="text-sm font-medium tracking-wide">YouTube</span>
+                </div>
+                <span class="text-[10px] opacity-30 uppercase tracking-widest italic">Channel</span>
+            </a>
+
+            <a href="https://instagram.com/abdullah_al_aziz_muhammad" class="action-link animate" style="animation-delay: 0.5s;">
+                <div class="flex items-center gap-4">
+                    <i class="fa-brands fa-instagram w-5 text-center"></i>
+                    <span class="text-sm font-medium tracking-wide">Instagram</span>
+                </div>
+                <span class="text-[10px] opacity-30 uppercase tracking-widest italic">Portfolio</span>
+            </a>
+
+            <a href="https://tiktok.com/@abdullahalazizmuhammad" class="action-link animate" style="animation-delay: 0.55s;">
+                <div class="flex items-center gap-4">
+                    <i class="fa-brands fa-tiktok w-5 text-center"></i>
+                    <span class="text-sm font-medium tracking-wide">TikTok</span>
+                </div>
+                <span class="text-[10px] opacity-30 uppercase tracking-widest italic">Trends</span>
+            </a>
+
+            <a href="https://wa.me/8801798337807" class="action-link animate" style="animation-delay: 0.6s;">
+                <div class="flex items-center gap-4">
+                    <i class="fa-brands fa-whatsapp w-5 text-center"></i>
+                    <span class="text-sm font-medium tracking-wide">WhatsApp</span>
+                </div>
+                <span class="text-[10px] opacity-30 uppercase tracking-widest italic">Direct</span>
+            </a>
+
+            <a href="mailto:nabadayarite@gmail.com" class="action-link animate" style="animation-delay: 0.7s;">
+                <div class="flex items-center gap-4">
+                    <i class="fa-regular fa-envelope w-5 text-center"></i>
+                    <span class="text-sm font-medium tracking-wide">Email Me</span>
+                </div>
+                <span class="text-[10px] opacity-30 uppercase tracking-widest italic">Inquiry</span>
+            </a>
+
+            <a href="tel:+880 1798-337807" class="action-link animate" style="animation-delay: 0.75s;">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-phone w-5 text-center"></i>
+                    <span class="text-sm font-medium tracking-wide">Call Direct</span>
+                </div>
+                <span class="text-[10px] opacity-30 uppercase tracking-widest italic">Mobile</span>
+            </a>
+
+        </div>
+
+        <!-- Utility Section (Main CTA Button) -->
+        <footer class="mt-4 pt-4 border-t border-white/5">
+            <button onclick="downloadContact()" class="cta-button animate" style="animation-delay: 0.8s;">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                Sync Contact Info
+            </button>
+            <div class="text-center mt-4 opacity-30">
+                <span class="text-[8px] uppercase tracking-[0.3em]">Built for the future &bull; Est. 2026</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // High-precision viewport handling for mobile
+        const adjustViewport = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        };
+        window.addEventListener('resize', adjustViewport);
+        adjustViewport();
+
+        // Professional VCF generation
+        function downloadContact() {
+            const vCard = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                'FN:Abdullah Al Aziz',
+                'TITLE:Digital Creator',
+                'TEL;TYPE=WORK,VOICE:+8801234567890',
+                'EMAIL;TYPE=PREF,INTERNET:contact@abdullahalaziz.com',
+                'REV:' + new Date().toISOString(),
+                'END:VCARD'
+            ].join('\n');
+
+            const blob = new Blob([vCard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Al_Aziz_Contact.vcf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
